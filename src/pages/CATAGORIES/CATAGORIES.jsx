@@ -2,11 +2,17 @@ import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import axios from '../../axios'
 import { Link } from 'react-router-dom'
+import DELETE from './DELETE/DELETE'
+import blank from '../../assets/images/blank.png'
 
 const CATAGORIES = () => {
     const [data, setData] = useState([])
     const [filteredData, setFilteredData] = useState([])
     const [search, setSearch] = useState('')
+
+    const [deleteModalShow, setDeleteModalShow] = useState(false);
+
+    const [sendDeleteId, setSendDeleteId] = useState('')
 
     const getData = async () => {
         try{
@@ -31,10 +37,20 @@ const CATAGORIES = () => {
         //eslint-disable-next-line
     }, [search])
 
+    const deleteModal = (deleteID) => {
+        setSendDeleteId(deleteID)
+        setDeleteModalShow(true)
+    }
+
+    const ondeletesuccess = () => {
+        getData()
+        setDeleteModalShow(false)
+    }
+
     const columns = [
         {
             name: 'Image',
-            selector: row => <img src={row.cat_image} alt="" />
+            selector: row => row.cat_image !== (0 || '0') ? <img style={{width: '50px'}} src={row.cat_image} alt="" /> : <img style={{width: '50px'}} src={blank} alt="" />
         },
         {
             name: 'Catagory Name',
@@ -52,8 +68,8 @@ const CATAGORIES = () => {
         {
             name: 'Action',
             cell: row => <>
-                <button className='btn btn-primary'>Edit</button>
-                <button className='btn btn-danger'>Delete</button>
+                <Link to={`edit/${row.id}`} className='btn btn-primary'>Edit</Link>
+                <button onClick={() => deleteModal(row.id)} className='btn btn-danger mx-2'>Delete</button>
             </>
         }
     ]
@@ -78,6 +94,13 @@ const CATAGORIES = () => {
                 actions={
                     <Link to='add' className='btn btn-primary'>ADD NEW CATAGORY</Link>
                 }
+            />
+
+            <DELETE 
+                show={deleteModalShow}
+                onHide={() => setDeleteModalShow(false)}
+                deleteid = {sendDeleteId}
+                ondeletesuccess={ondeletesuccess}
             />
         </div>
     )
