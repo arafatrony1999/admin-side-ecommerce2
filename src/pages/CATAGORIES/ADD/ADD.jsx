@@ -5,7 +5,7 @@ import axios from '../../../axios'
 import { toast } from 'react-toastify';
 import blank from '../../../assets/images/blank.png'
 
-const ADD = () => {
+const ADDCATAGORY = () => {
     const [btnText, setBtnText] = useState('Add')
     const [loading, setLoading] = useState(false)
 
@@ -119,4 +119,4 @@ const ADD = () => {
     )
 }
 
-export default ADD
+export default ADDCATAGORY

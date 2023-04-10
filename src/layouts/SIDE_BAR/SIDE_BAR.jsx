@@ -119,10 +119,10 @@ const SIDEBAR = () => {
                             <div className="btn-toggle-items">
                                 <div className="btn-toggle-left"></div>
                                 <div className="btn-toggle-right">
-                                    <NavLink to='/'>
+                                    <NavLink to='/sub-catagories'>
                                         <div className='sidebar-name'>All Sub Catagories</div>
                                     </NavLink>
-                                    <NavLink to='/'>
+                                    <NavLink to='/sub-catagories/add'>
                                         <div className='sidebar-name'>Add Sub Catagories</div>
                                     </NavLink>
                                 </div>

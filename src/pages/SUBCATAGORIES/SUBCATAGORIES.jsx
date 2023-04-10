@@ -3,9 +3,8 @@ import DataTable from 'react-data-table-component'
 import axios from '../../axios'
 import { Link } from 'react-router-dom'
 import DELETE from './DELETE/DELETE'
-import WARNING from './WARNING/WARNING'
 import blank from '../../assets/images/blank.png'
-import { toast } from 'react-toastify'
+import { BsBoxArrowUpRight, BsTrash } from "react-icons/bs";
 
 const CATAGORIES = () => {
     const [data, setData] = useState([])
@@ -13,14 +12,13 @@ const CATAGORIES = () => {
     const [search, setSearch] = useState('')
 
     const [deleteModalShow, setDeleteModalShow] = useState(false);
-    const [warningModalShow, setWarningModalShow] = useState(false);
 
     const [sendDeleteId, setSendDeleteId] = useState('')
-    const [sendWarningId, setSendWarningId] = useState('')
 
     const getData = async () => {
         try{
-            const res = await axios.get('/getCatagories')
+            const res = await axios.get('/getSubCatagories')
+            console.log(res.data)
             setData(res.data)
             setFilteredData(res.data)
         }
@@ -51,53 +49,34 @@ const CATAGORIES = () => {
         setDeleteModalShow(false)
     }
 
-    const warningModal = (warningID) => {
-        setSendWarningId(warningID)
-        setWarningModalShow(true)
-    }
-
-    const onwarningsuccess = () => {
-        getData()
-        setWarningModalShow(false)
-    }
-
-    const onwarningfailed = () => {
-        setWarningModalShow(false)
-        toast.warn('You can only add 3 featured catagory!', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-        })
-    }
 
     const columns = [
         {
             name: 'Image',
-            selector: row => row.cat_image !== (0 || '0') ? <img style={{width: '50px'}} src={row.cat_image} alt="" /> : <img style={{width: '50px'}} src={blank} alt="" />
+            selector: row => row.image !== (0 || '0') ? <img style={{width: '50px'}} src={row.image} alt="" /> : <img style={{width: '50px'}} src={blank} alt="" />
         },
         {
-            name: 'Catagory Name',
-            selector: row => row.cat_name,
+            name: 'Sub Catagory Name',
+            selector: row => row.name,
             sortable: true
         },
         {
-            name: 'Featured',
-            selector: row => row.featured === (1 || '1') ? <button onClick={() => warningModal(row.id)} className='btn btn-success'>Featured</button> : <button onClick={() => warningModal(row.id)} className='btn btn-danger'>Not Featured</button>
+            name: 'Catagory',
+            selector: row => row.catagory.cat_name
         },
         {
             name: 'Description',
-            selector: row => <div dangerouslySetInnerHTML={{__html: row.cat_desc}} />
+            selector: row => <div dangerouslySetInnerHTML={{__html: row.sub_desc}} />
         },
         {
             name: 'Action',
             cell: row => <>
-                <Link to={`edit/${row.id}`} className='btn btn-primary'>Edit</Link>
-                <button onClick={() => deleteModal(row.id)} className='btn btn-danger mx-2'>Delete</button>
+                <Link to={`edit/${row.id}`} className='btn btn-primary'>
+                    <BsBoxArrowUpRight />
+                </Link>
+                <button onClick={() => deleteModal(row.id)} className='btn btn-danger mx-2'>
+                    <BsTrash />
+                </button>
             </>
         }
     ]
@@ -129,14 +108,6 @@ const CATAGORIES = () => {
                 onHide={() => setDeleteModalShow(false)}
                 deleteid = {sendDeleteId}
                 ondeletesuccess = {ondeletesuccess}
-            />
-
-            <WARNING
-                show={warningModalShow}
-                onHide={() => setWarningModalShow(false)}
-                warningid = {sendWarningId}
-                onwarningsuccess = {onwarningsuccess}
-                onwarningfailed = {onwarningfailed}
             />
         </div>
     )

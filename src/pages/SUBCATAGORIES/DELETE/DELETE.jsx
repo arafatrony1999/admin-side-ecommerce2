@@ -4,8 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
 
-const WARNING = (props) => {
-    const [btnText, setBtnText] = useState('Update')
+const DELETE = (props) => {
+    const [btnText, setBtnText] = useState('Delete')
     const [loading, setLoading] = useState(false)
 
     const onClick = (id) => {
@@ -14,18 +14,16 @@ const WARNING = (props) => {
         const formData = new FormData();
         formData.append('id', id)
 
-        axios.post('/updateCatagoryFeature', formData)
+        axios.post('/deleteSubCatagory', formData)
         .then((res) => {
             if(res.data === 1){
-                props.onwarningsuccess()
-            }else{
-                props.onwarningfailed()
+                props.ondeletesuccess()
             }
-            setBtnText('Update')
+            setBtnText('Delete')
             setLoading(false)
         })
         .catch((error) => {
-            toast.error('No data have been changed!', {
+            toast.error('Something went wrong!', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -35,10 +33,12 @@ const WARNING = (props) => {
                 progress: undefined,
                 theme: "colored",
             })
-            setBtnText('Update')
+            setBtnText('Delete')
             setLoading(false)
         })
     }
+
+    
     return (
         <>
             <Modal
@@ -49,15 +49,15 @@ const WARNING = (props) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Update featured status
+                        Delete Sub Catagory
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>Update featured status?</p>
+                    <p>Are you sure you want to delete this sub-catagory?</p>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={props.onHide}>Close</Button>
-                    <Button className='btn-danger' disabled={loading ? true : false} onClick={() => onClick(props.warningid)}>
+                    <Button className='btn-danger' disabled={loading ? true : false} onClick={() => onClick(props.deleteid)}>
                         {btnText}
                     </Button>
                 </Modal.Footer>
@@ -66,4 +66,4 @@ const WARNING = (props) => {
     )
 }
 
-export default WARNING
+export default DELETE

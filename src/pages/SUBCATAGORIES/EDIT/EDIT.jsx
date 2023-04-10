@@ -5,28 +5,48 @@ import axios from '../../../axios'
 import { toast } from 'react-toastify';
 import blank from '../../../assets/images/blank.png'
 import { useParams } from 'react-router-dom';
+import Select from 'react-select'
 
-const EDITCATAGORY = () => {
+const EDIT = () => {
     const { editID } = useParams();
 
     const [btnText, setBtnText] = useState('Update')
     const [loading, setLoading] = useState(false)
 
+    const [data, setData] = useState([])
+
     const [name, setName] = useState('')
     const [image, setImage] = useState('')
     const [desc, setDesc] = useState('')
+    const [catagory, setCatagory] = useState({})
     const [src, setSrc] = useState('')
     const [prevImg, setPrevImg] = useState('')
+
+    
+    const getData = async () => {
+        try{
+            const res = await axios.get('/getCatagories')
+            setData(res.data)
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
 
     useEffect(() => {
         const formData = new FormData()
         formData.append('id', editID)
 
-        axios.post('/getEditCatagory', formData)
+        axios.post('/getEditSubCatagory', formData)
         .then((res) => {
-            setName(res.data.cat_name)
-            setPrevImg(res.data.cat_image)
-            setDesc(res.data.cat_desc)
+            setName(res.data[0].name)
+            setPrevImg(res.data[0].image)
+            setDesc(res.data[0].sub_desc)
+            setCatagory(res.data[0].catagory)
         })
     }, [editID])
 
@@ -52,11 +72,12 @@ const EDITCATAGORY = () => {
         formData.append('name', name)
         formData.append('image', image)
         formData.append('desc', desc)
+        formData.append('catID', catagory.id)
 
-        axios.post('/editCatagory', formData)
+        axios.post('/editSubCatagory', formData)
         .then((res) => {
             if(res.data === 1){
-                toast.success('Catagory updated successful', {
+                toast.success('Sub Catagory updated successful', {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -91,12 +112,28 @@ const EDITCATAGORY = () => {
         <div className='page-container'>
             <Form onSubmit={onSubmit}>
                 <Form.Group className="mb-3">
-                    <Form.Label>Catagory Name</Form.Label>
-                    <Form.Control value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Catagory Name" />
+                    <Form.Label>Sub Catagory Name</Form.Label>
+                    <Form.Control value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Sub Catagory Name" required />
+                </Form.Group>
+
+                <Form.Group controlId="formFile" className="mb-3">
+                    <Form.Label>Select Catagory</Form.Label>
+                    <Select
+                        value={catagory}
+                        onChange={setCatagory}
+                        options={data}
+                        getOptionLabel={(options) => options.cat_name}
+                        getOptionValue={(options) => options.id}
+                        isSearchable
+                        isClearable
+                        noOptionsMessage={() => 'No catagory found'}
+                        placeholder='Select Catagory...'
+                        required
+                    />
                 </Form.Group>
                 
                 <Form.Group controlId="formFile" className="mb-3">
-                    <Form.Label>Catagory Image</Form.Label>
+                    <Form.Label>Sub Catagory Image</Form.Label>
                     <Form.Control type="file" onChange={(e) => fileChange(e)} />
                 </Form.Group>
 
@@ -126,4 +163,4 @@ const EDITCATAGORY = () => {
     )
 }
 
-export default EDITCATAGORY
+export default EDIT

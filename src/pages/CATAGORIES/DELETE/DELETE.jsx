@@ -37,6 +37,8 @@ const DELETE = (props) => {
             setLoading(false)
         })
     }
+
+    
     return (
         <>
             <Modal
