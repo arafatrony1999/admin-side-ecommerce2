@@ -7,6 +7,7 @@ import blank from '../../assets/images/blank.png'
 import { BsBoxArrowUpRight, BsTrash } from "react-icons/bs";
 
 const CATAGORIES = () => {
+    const [loading, setLoading] = useState(true)
     const [data, setData] = useState([])
     const [filteredData, setFilteredData] = useState([])
     const [search, setSearch] = useState('')
@@ -21,6 +22,7 @@ const CATAGORIES = () => {
             console.log(res.data)
             setData(res.data)
             setFilteredData(res.data)
+            setLoading(false)
         }
         catch(error){
             console.log(error)
@@ -88,6 +90,7 @@ const CATAGORIES = () => {
                 columns={columns}
                 data={filteredData}
                 pagination
+                progressPending={loading && 'Loading...'}
                 title='Sub Catagories'
                 fixedHeader
                 fixedHeaderScrollHeight='50%'

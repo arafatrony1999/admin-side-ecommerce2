@@ -7,6 +7,7 @@ import WARNING from './WARNING/WARNING'
 import { BsBoxArrowUpRight, BsTrash } from "react-icons/bs";
 
 const OFFERS = () => {
+    const [loading, setLoading] = useState(true)
     const [data, setData] = useState([])
     const [filteredData, setFilteredData] = useState([])
     const [search, setSearch] = useState('')
@@ -22,6 +23,7 @@ const OFFERS = () => {
             const res = await axios.get('/getOffers')
             setData(res.data)
             setFilteredData(res.data)
+            setLoading(false)
         }
         catch(error){
             console.log(error)
@@ -97,6 +99,7 @@ const OFFERS = () => {
             <DataTable
                 columns={columns}
                 data={filteredData}
+                progressPending={loading && 'Loading...'}
                 pagination
                 title='Offers'
                 fixedHeader

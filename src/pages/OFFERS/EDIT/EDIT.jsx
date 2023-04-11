@@ -5,7 +5,7 @@ import axios from '../../../axios'
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 
-const EDITOFFER = () => {
+const EDIT = () => {
     const { editID } = useParams();
 
     const [btnText, setBtnText] = useState('Update')
@@ -127,4 +127,4 @@ const EDITOFFER = () => {
     )
 }
 
-export default EDITOFFER
+export default EDIT

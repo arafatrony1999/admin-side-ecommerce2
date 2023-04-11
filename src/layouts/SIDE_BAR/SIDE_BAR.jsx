@@ -165,7 +165,7 @@ const SIDEBAR = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to='/'>
+                    <NavLink to='/coupons'>
                         <div className='sidebar-icon'>
                             <FaUser />
                         </div>

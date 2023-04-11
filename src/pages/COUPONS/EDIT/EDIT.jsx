@@ -3,7 +3,6 @@ import Form from 'react-bootstrap/Form';
 import JoditEditor from 'jodit-react';
 import axios from '../../../axios'
 import { toast } from 'react-toastify';
-import blank from '../../../assets/images/blank.png'
 import { useParams } from 'react-router-dom';
 
 const EDIT = () => {
@@ -13,20 +12,26 @@ const EDIT = () => {
     const [loading, setLoading] = useState(false)
 
     const [name, setName] = useState('')
-    const [image, setImage] = useState('')
+    const [code, setCode] = useState('')
+    const [status, setStatus] = useState(1)
+    const [discount, setDiscount] = useState(0)
+    const [maxDiscount, setMaxDiscount] = useState('')
+    const [minOrder, setMinOrder] = useState(0)
     const [desc, setDesc] = useState('')
-    const [src, setSrc] = useState('')
-    const [prevImg, setPrevImg] = useState('')
 
     useEffect(() => {
         const formData = new FormData()
         formData.append('id', editID)
 
-        axios.post('/getEditCatagory', formData)
+        axios.post('/getEditCoupon', formData)
         .then((res) => {
-            setName(res.data.cat_name)
-            setPrevImg(res.data.cat_image)
-            setDesc(res.data.cat_desc)
+            setName(res.data[0].name)
+            setCode(res.data[0].code)
+            setDiscount(res.data[0].discount)
+            setDesc(res.data[0].desc)
+            setStatus(res.data[0].status)
+            setMaxDiscount(res.data[0].max_discount)
+            setMinOrder(res.data[0].min_order)
         })
     }, [editID])
 
@@ -35,11 +40,6 @@ const EDIT = () => {
             readonly: false, 
         }), []
     );
-
-    const fileChange = (e) => {
-        setImage(e.target.files[0])
-        setSrc(e.target.files[0] && URL.createObjectURL(e.target.files[0]))
-    }
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -50,13 +50,17 @@ const EDIT = () => {
 
         formData.append('id', editID)
         formData.append('name', name)
-        formData.append('image', image)
+        formData.append('code', code.toUpperCase())
+        formData.append('status', status)
+        formData.append('discount', discount)
+        formData.append('max_discount', maxDiscount)
+        formData.append('min_order', minOrder)
         formData.append('desc', desc)
 
-        axios.post('/editCatagory', formData)
+        axios.post('/editCoupon', formData)
         .then((res) => {
             if(res.data === 1){
-                toast.success('Catagory updated successful', {
+                toast.success('Coupon updated successfully!', {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -91,22 +95,40 @@ const EDIT = () => {
         <div className='page-container'>
             <Form onSubmit={onSubmit}>
                 <Form.Group className="mb-3">
-                    <Form.Label>Catagory Name</Form.Label>
-                    <Form.Control value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Catagory Name" />
-                </Form.Group>
-                
-                <Form.Group controlId="formFile" className="mb-3">
-                    <Form.Label>Catagory Image</Form.Label>
-                    <Form.Control type="file" onChange={(e) => fileChange(e)} />
+                    <Form.Label>Coupon Name</Form.Label>
+                    <Form.Control value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Coupon Name" required />
                 </Form.Group>
 
-                {
-                    src ?
-                    <img style={{maxWidth: '100px', margin: '20px 0'}} src={src} alt="" /> :
-                    <img style={{maxWidth: '100px', margin: '20px 0'}} src={prevImg !== (0 || '0') ? prevImg : blank} alt="" />
-                }
+                <Form.Group className="mb-3">
+                    <Form.Label>Coupon Code</Form.Label>
+                    <Form.Control value={code} onChange={(e) => setCode(e.target.value)} type="text" placeholder="Enter Coupon Code" required />
+                </Form.Group>
                 
+                <Form.Group className="mb-3">
+                    <Form.Label>Coupon Status</Form.Label>
+                    <Form.Select defaultValue={status} onChange={(e) => setStatus(e.target.value)} >
+                        <option disabled>Select Coupon Status...</option>
+                        <option value="1">Active</option>
+                        <option value="0">Not Active</option>
+                    </Form.Select>
+                </Form.Group>
 
+                <Form.Group className="mb-3">
+                    <Form.Label>Discount (%)</Form.Label>
+                    <Form.Control value={discount} onChange={(e) => setDiscount(e.target.value)} type="text" placeholder="Discount Percent" required />
+                </Form.Group>
+                
+                <Form.Group className="mb-3">
+                    <Form.Label>Maximum Discount (Taka)</Form.Label>
+                    <Form.Control value={maxDiscount} onChange={(e) => setMaxDiscount(e.target.value)} type="text" placeholder="Maximum Discount" required />
+                </Form.Group>
+                
+                <Form.Group className="mb-3">
+                    <Form.Label>Minimum Order (Taka)</Form.Label>
+                    <Form.Control value={minOrder} onChange={(e) => setMinOrder(e.target.value)} type="text" placeholder="Maximum Discount" required />
+                </Form.Group>
+                
+                
                 <Form.Group className='mb-3'>
                     <Form.Label>Description</Form.Label>
                     <JoditEditor

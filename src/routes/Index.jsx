@@ -15,6 +15,10 @@ import OFFERS from '../pages/OFFERS/OFFERS'
 import ADDOFFER from '../pages/OFFERS/ADD/ADD';
 import EDITOFFER from '../pages/OFFERS/EDIT/EDIT';
 
+import COUPONS from '../pages/COUPONS/COUPONS'
+import ADDCOUPON from '../pages/COUPONS/ADD/ADD';
+import EDITCOUPON from '../pages/COUPONS/EDIT/EDIT';
+
 const Index = () => {
     return(
         <>
@@ -39,6 +43,10 @@ const Index = () => {
                             <Route path='/offers' element={<OFFERS />} />
                             <Route path='offers/add' element={<ADDOFFER />} />
                             <Route path='offers/edit/:editID' element={<EDITOFFER />} />
+                            
+                            <Route path='/coupons' element={<COUPONS />} />
+                            <Route path='coupons/add' element={<ADDCOUPON />} />
+                            <Route path='coupons/edit/:editID' element={<EDITCOUPON />} />
                         </Routes>
                     </div>
                 </div>
