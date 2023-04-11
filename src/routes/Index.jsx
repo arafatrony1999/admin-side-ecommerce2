@@ -11,6 +11,10 @@ import SUBCATAGORIES from '../pages/SUBCATAGORIES/SUBCATAGORIES'
 import ADDSUBCATAGORY from '../pages/SUBCATAGORIES/ADD/ADD';
 import EDITSUBCATAGORY from '../pages/SUBCATAGORIES/EDIT/EDIT';
 
+import OFFERS from '../pages/OFFERS/OFFERS'
+import ADDOFFER from '../pages/OFFERS/ADD/ADD';
+import EDITOFFER from '../pages/OFFERS/EDIT/EDIT';
+
 const Index = () => {
     return(
         <>
@@ -31,6 +35,10 @@ const Index = () => {
                             <Route path='/sub-catagories' element={<SUBCATAGORIES />} />
                             <Route path='sub-catagories/add' element={<ADDSUBCATAGORY />} />
                             <Route path='sub-catagories/edit/:editID' element={<EDITSUBCATAGORY />} />
+                            
+                            <Route path='/offers' element={<OFFERS />} />
+                            <Route path='offers/add' element={<ADDOFFER />} />
+                            <Route path='offers/edit/:editID' element={<EDITOFFER />} />
                         </Routes>
                     </div>
                 </div>

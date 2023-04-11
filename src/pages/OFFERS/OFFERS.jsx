@@ -3,22 +3,23 @@ import DataTable from 'react-data-table-component'
 import axios from '../../axios'
 import { Link } from 'react-router-dom'
 import DELETE from './DELETE/DELETE'
-import blank from '../../assets/images/blank.png'
+import WARNING from './WARNING/WARNING'
 import { BsBoxArrowUpRight, BsTrash } from "react-icons/bs";
 
-const CATAGORIES = () => {
+const OFFERS = () => {
     const [data, setData] = useState([])
     const [filteredData, setFilteredData] = useState([])
     const [search, setSearch] = useState('')
 
     const [deleteModalShow, setDeleteModalShow] = useState(false);
+    const [warningModalShow, setWarningModalShow] = useState(false);
 
     const [sendDeleteId, setSendDeleteId] = useState('')
+    const [sendWarningId, setSendWarningId] = useState('')
 
     const getData = async () => {
         try{
-            const res = await axios.get('/getSubCatagories')
-            console.log(res.data)
+            const res = await axios.get('/getOffers')
             setData(res.data)
             setFilteredData(res.data)
         }
@@ -33,11 +34,10 @@ const CATAGORIES = () => {
 
     useEffect(() => {
         const result = data.filter(single_data => {
-            return single_data.cat_name.toLowerCase().match(search.toLowerCase())
+            return single_data.name.toLowerCase().match(search.toLowerCase())
         })
         setFilteredData(result)
-        //eslint-disable-next-line
-    }, [search])
+    }, [search, data])
 
     const deleteModal = (deleteID) => {
         setSendDeleteId(deleteID)
@@ -49,24 +49,34 @@ const CATAGORIES = () => {
         setDeleteModalShow(false)
     }
 
+    const warningModal = (warningID) => {
+        setSendWarningId(warningID)
+        setWarningModalShow(true)
+    }
+
+    const onwarningsuccess = () => {
+        getData()
+        setWarningModalShow(false)
+    }
+
 
     const columns = [
         {
-            name: 'Image',
-            selector: row => row.image !== (0 || '0') ? <img style={{width: '50px'}} src={row.image} alt="" /> : <img style={{width: '50px'}} src={blank} alt="" />
-        },
-        {
-            name: 'Sub Catagory Name',
+            name: 'Offer Name',
             selector: row => row.name,
             sortable: true
         },
         {
-            name: 'Catagory',
-            selector: row => row.catagory.cat_name
+            name: 'Discount Percent',
+            selector: row => <span>{row.discount_percent}%</span>
+        },
+        {
+            name: 'Status',
+            selector: row => row.status === (1 || '1') ? <button onClick={() => warningModal(row.id)} className='btn btn-success'>Active</button> : <button onClick={() => warningModal(row.id)} className='btn btn-danger'>Not Active</button>
         },
         {
             name: 'Description',
-            selector: row => <div dangerouslySetInnerHTML={{__html: row.sub_desc}} />
+            selector: row => <div dangerouslySetInnerHTML={{__html: row.description}} />
         },
         {
             name: 'Action',
@@ -88,7 +98,7 @@ const CATAGORIES = () => {
                 columns={columns}
                 data={filteredData}
                 pagination
-                title='Sub Catagories'
+                title='Offers'
                 fixedHeader
                 fixedHeaderScrollHeight='50%'
                 selectableRows
@@ -99,7 +109,7 @@ const CATAGORIES = () => {
                     <input type='search' value={search} onChange={(e) => setSearch(e.target.value)} placeholder='Search' className='w-25 form-group' />
                 }
                 actions={
-                    <Link to='add' className='btn btn-primary'>ADD NEW SUB CATAGORY</Link>
+                    <Link to='add' className='btn btn-primary'>ADD NEW OFFER</Link>
                 }
             />
 
@@ -109,8 +119,15 @@ const CATAGORIES = () => {
                 deleteid = {sendDeleteId}
                 ondeletesuccess = {ondeletesuccess}
             />
+
+            <WARNING
+                show={warningModalShow}
+                onHide={() => setWarningModalShow(false)}
+                warningid = {sendWarningId}
+                onwarningsuccess = {onwarningsuccess}
+            />
         </div>
     )
 }
 
-export default CATAGORIES
+export default OFFERS

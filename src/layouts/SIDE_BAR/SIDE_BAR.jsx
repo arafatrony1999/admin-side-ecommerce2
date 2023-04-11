@@ -157,11 +157,11 @@ const SIDEBAR = () => {
             <div className="side-menu-title">Offers</div>
             <ul>
                 <li>
-                    <NavLink to='/'>
+                    <NavLink to='/offers'>
                         <div className='sidebar-icon'>
                             <FaUser />
                         </div>
-                        <div className='sidebar-name'>Featured Products</div>
+                        <div className='sidebar-name'>Offers</div>
                     </NavLink>
                 </li>
                 <li>
@@ -169,7 +169,7 @@ const SIDEBAR = () => {
                         <div className='sidebar-icon'>
                             <FaUser />
                         </div>
-                        <div className='sidebar-name'>Featured Products</div>
+                        <div className='sidebar-name'>Coupon</div>
                     </NavLink>
                 </li>
             </ul>
