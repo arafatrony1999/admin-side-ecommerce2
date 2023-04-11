@@ -33,10 +33,10 @@ const SIDEBAR = () => {
                             <div className="btn-toggle-items">
                                 <div className="btn-toggle-left"></div>
                                 <div className="btn-toggle-right">
-                                    <NavLink to='/'>
+                                    <NavLink to='/products'>
                                         <div className='sidebar-name'>All Products</div>
                                     </NavLink>
-                                    <NavLink to='/'>
+                                    <NavLink to='/products/add'>
                                         <div className='sidebar-name'>Add Products</div>
                                     </NavLink>
                                 </div>
