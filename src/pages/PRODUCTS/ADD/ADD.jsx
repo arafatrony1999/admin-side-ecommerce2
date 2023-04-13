@@ -16,7 +16,7 @@ const ADD = () => {
     const [btnText, setBtnText] = useState('Add')
     const [loading, setLoading] = useState(false)
 
-    const { getData } = useProductContext();
+    const { getProducts } = useProductContext()
 
     const { all_catagory } = useCatagoryContext();
     const { all_sub_catagory } = useSubCatagoryContext();
@@ -84,7 +84,7 @@ const ADD = () => {
         axios.post('/addProduct', formData)
         .then((res) => {
             if(res.data === 1){
-                toast.success('Sub Catagory add successful', {
+                toast.success('Product add successful', {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -104,6 +104,8 @@ const ADD = () => {
                 setSubcatagory('')
                 setOffer('0')
                 setDiscount(null)
+
+                getProducts()
 
             }else{
                 toast.error('Fill all the required fields!', {

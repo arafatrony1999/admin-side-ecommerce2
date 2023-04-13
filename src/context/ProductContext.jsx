@@ -11,7 +11,7 @@ const initialState = {
 const ProductProvider = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     
-    const getData = async () => {
+    const getProducts = async () => {
         try{
             const res = await axios.get('/getProduct')
             dispatch({type: 'API_DATA', payload: res.data})
@@ -22,12 +22,12 @@ const ProductProvider = ({children}) => {
     }
 
     useEffect(() => {
-        getData()
+        getProducts()
     }, [])
 
 
     return(
-        <ProductContext.Provider value={{...state}}>
+        <ProductContext.Provider value={{...state, getProducts}}>
             {children}
         </ProductContext.Provider>
     )

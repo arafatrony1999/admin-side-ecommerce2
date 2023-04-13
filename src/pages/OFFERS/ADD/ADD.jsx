@@ -3,10 +3,13 @@ import Form from 'react-bootstrap/Form';
 import JoditEditor from 'jodit-react';
 import axios from '../../../axios'
 import { toast } from 'react-toastify';
+import { useOfferContext } from '../../../context/OfferContext';
 
 const ADD = () => {
     const [btnText, setBtnText] = useState('Add')
     const [loading, setLoading] = useState(false)
+
+    const { getOffers } = useOfferContext()
 
     const [name, setName] = useState('')
     const [percent, setPercent] = useState(0)
@@ -49,6 +52,8 @@ const ADD = () => {
                 setPercent('')
                 setStatus('')
                 setDesc('')
+
+                getOffers()
             }else{
                 toast.error('Fill all the required field', {
                     position: "top-right",

@@ -5,10 +5,14 @@ import axios from '../../../axios'
 import { toast } from 'react-toastify';
 import blank from '../../../assets/images/blank.png'
 import Select from 'react-select';
+import { useSubCatagoryContext } from '../../../context/SubCatagoryContext';
 
 const ADD = () => {
     const [btnText, setBtnText] = useState('Add')
     const [loading, setLoading] = useState(false)
+
+    const { getSubCatagory } = useSubCatagoryContext()
+
     const [data, setData] = useState([])
 
     const [name, setName] = useState('')
@@ -71,6 +75,8 @@ const ADD = () => {
                 setImage('')
                 setDesc('')
                 setSrc('')
+
+                getSubCatagory()
             }else{
                 toast.error('Fill all the required field', {
                     position: "top-right",
@@ -87,7 +93,7 @@ const ADD = () => {
             setLoading(false)
         })
         .catch((error) => {
-            toast.error('Fill all the required field', {
+            toast.error('Something went wrong!', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,

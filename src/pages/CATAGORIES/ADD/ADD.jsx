@@ -4,10 +4,13 @@ import JoditEditor from 'jodit-react';
 import axios from '../../../axios'
 import { toast } from 'react-toastify';
 import blank from '../../../assets/images/blank.png'
+import { useCatagoryContext } from '../../../context/CatagoryContext';
 
 const ADD = () => {
     const [btnText, setBtnText] = useState('Add')
     const [loading, setLoading] = useState(false)
+
+    const { getCatagory } = useCatagoryContext();
 
     const [name, setName] = useState('')
     const [image, setImage] = useState('')
@@ -53,6 +56,8 @@ const ADD = () => {
                 setImage('')
                 setDesc('')
                 setSrc('')
+
+                getCatagory()
             }else{
                 toast.error('Fill all the required field', {
                     position: "top-right",
