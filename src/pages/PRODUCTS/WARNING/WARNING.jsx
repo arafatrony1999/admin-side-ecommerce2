@@ -4,8 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
 
-const DELETE = (props) => {
-    const [btnText, setBtnText] = useState('Delete')
+const WARNING = (props) => {
+    const [btnText, setBtnText] = useState('Update')
     const [loading, setLoading] = useState(false)
 
     const onClick = (id) => {
@@ -14,12 +14,12 @@ const DELETE = (props) => {
         const formData = new FormData();
         formData.append('id', id)
 
-        axios.post('/deleteProduct', formData)
+        axios.post('/updateProductFeature', formData)
         .then((res) => {
             if(res.data === 1){
-                props.ondeletesuccess()
+                props.onwarningsuccess()
             }
-            setBtnText('Delete')
+            setBtnText('Update')
             setLoading(false)
         })
         .catch((error) => {
@@ -33,12 +33,10 @@ const DELETE = (props) => {
                 progress: undefined,
                 theme: "colored",
             })
-            setBtnText('Delete')
+            setBtnText('Update')
             setLoading(false)
         })
     }
-
-    
     return (
         <>
             <Modal
@@ -49,15 +47,15 @@ const DELETE = (props) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Delete Product
+                        Update featured status
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>Are you sure you want to delete this product?</p>
+                    <p>Update featured status?</p>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={props.onHide}>Close</Button>
-                    <Button className='btn-danger' disabled={loading ? true : false} onClick={() => onClick(props.deleteid)}>
+                    <Button className='btn-danger' disabled={loading ? true : false} onClick={() => onClick(props.warningid)}>
                         {btnText}
                     </Button>
                 </Modal.Footer>
@@ -66,4 +64,4 @@ const DELETE = (props) => {
     )
 }
 
-export default DELETE
+export default WARNING

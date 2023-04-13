@@ -10,10 +10,13 @@ import Col from 'react-bootstrap/Col';
 import { useCatagoryContext } from '../../../context/CatagoryContext';
 import { useSubCatagoryContext } from '../../../context/SubCatagoryContext';
 import { useOfferContext } from '../../../context/OfferContext';
+import { useProductContext } from '../../../context/ProductContext';
 
 const ADD = () => {
     const [btnText, setBtnText] = useState('Add')
     const [loading, setLoading] = useState(false)
+
+    const { getData } = useProductContext();
 
     const { all_catagory } = useCatagoryContext();
     const { all_sub_catagory } = useSubCatagoryContext();
@@ -21,11 +24,12 @@ const ADD = () => {
 
     const [name, setName] = useState('')
     const [price, setPrice] = useState(0)
+    const [item, setItem] = useState(0)
     const [catagory, setCatagory] = useState('')
     const [subcatagory, setSubcatagory] = useState('')
     const [desc, setDesc] = useState('')
     const [image, setImage] = useState('')
-    const [offer, setOffer] = useState(0)
+    const [offer, setOffer] = useState('0')
     const [discount, setDiscount] = useState(null)
 
     const [src, setSrc] = useState('')
@@ -67,6 +71,7 @@ const ADD = () => {
 
         formData.append('name', name)
         formData.append('price', price)
+        formData.append('item', item)
         formData.append('image', image)
         formData.append('description', desc)
         formData.append('catagory', catagory.id)
@@ -90,11 +95,18 @@ const ADD = () => {
                     theme: "colored",
                 });
                 setName('')
+                setPrice(0)
+                setItem(0)
                 setImage('')
                 setDesc('')
                 setSrc('')
+                setCatagory('')
+                setSubcatagory('')
+                setOffer('0')
+                setDiscount(null)
+
             }else{
-                toast.error('Fill all the required field', {
+                toast.error('Fill all the required fields!', {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -109,7 +121,7 @@ const ADD = () => {
             setLoading(false)
         })
         .catch((error) => {
-            toast.error('Fill all the required field', {
+            toast.error('Fill all the required fields!', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -208,10 +220,14 @@ const ADD = () => {
                     </Col>
                 </Row>
                 
+                <Form.Group className="mb-3">
+                    <Form.Label>Total Item in Stock</Form.Label>
+                    <Form.Control value={item} onChange={(e) => setItem(e.target.value)} type="text" placeholder="Total Item in Stock" required />
+                </Form.Group>
                 
                 <Form.Group controlId="formFile" className="mb-3">
-                    <Form.Label>Sub Catagory Image</Form.Label>
-                    <Form.Control type="file" onChange={(e) => fileChange(e)} required />
+                    <Form.Label>Product Image</Form.Label>
+                    <Form.Control type="file" onChange={(e) => fileChange(e)} />
                 </Form.Group>
                 <img style={{maxWidth: '100px', margin: '20px 0'}} src={src ? src : blank} alt="" />
 

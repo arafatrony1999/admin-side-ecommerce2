@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { CatagoryProvider } from './context/CatagoryContext';
 import { SubCatagoryProvider } from './context/SubCatagoryContext';
 import { OfferProvider } from './context/OfferContext';
+import { ProductProvider } from './context/ProductContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -12,7 +13,9 @@ root.render(
     <CatagoryProvider>
       <SubCatagoryProvider>
         <OfferProvider>
-          <App />
+          <ProductProvider>
+            <App />
+          </ProductProvider>
         </OfferProvider>
       </SubCatagoryProvider>
     </CatagoryProvider>
