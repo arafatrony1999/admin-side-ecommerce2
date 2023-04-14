@@ -45,7 +45,7 @@ const SIDEBAR = () => {
 
                         <ul>
                             <li>
-                                <NavLink to='/'>
+                                <NavLink to='/users'>
                                     <div className='sidebar-icon'>
                                         <FaUser />
                                     </div>

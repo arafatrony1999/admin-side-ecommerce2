@@ -23,6 +23,8 @@ import PRODUCTS from '../pages/PRODUCTS/PRODUCTS'
 import ADDPRODUCT from '../pages/PRODUCTS/ADD/ADD';
 import EDITPRODUCT from '../pages/PRODUCTS/EDIT/EDIT';
 
+import USERS from '../pages/USERS/USERS'
+
 const Index = () => {
     return(
         <>
@@ -55,6 +57,8 @@ const Index = () => {
                             <Route path='/products' element={<PRODUCTS />} />
                             <Route path='products/add' element={<ADDPRODUCT />} />
                             <Route path='products/edit/:editID' element={<EDITPRODUCT />} />
+                            
+                            <Route path='/users' element={<USERS />} />
                         </Routes>
                     </div>
                 </div>
