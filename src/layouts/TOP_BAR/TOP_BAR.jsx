@@ -18,6 +18,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import Button from '@mui/material/Button';
 import profile from '../../assets/images/formal.jpg';
 import { BsChevronDown } from "react-icons/bs";
+import { useUserContext } from '../../context/UserContext';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -63,6 +64,8 @@ export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
+    const { logout } = useUserContext()
+
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -107,6 +110,7 @@ export default function PrimarySearchAppBar() {
         >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={logout}>Logout</MenuItem>
         </Menu>
     );
 

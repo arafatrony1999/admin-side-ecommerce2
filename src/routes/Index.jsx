@@ -24,6 +24,9 @@ import ADDPRODUCT from '../pages/PRODUCTS/ADD/ADD';
 import EDITPRODUCT from '../pages/PRODUCTS/EDIT/EDIT';
 
 import USERS from '../pages/USERS/USERS'
+import ORDERS from '../pages/ORDERS/ORDERS';
+import ORDER_DETAILS from '../pages/ORDER_DETAILS/ORDER_DETAILS';
+import LOGINPAGE from '../pages/LOGIN_PAGE/LOGIN_PAGE';
 
 const Index = () => {
     return(
@@ -59,6 +62,14 @@ const Index = () => {
                             <Route path='products/edit/:editID' element={<EDITPRODUCT />} />
                             
                             <Route path='/users' element={<USERS />} />
+
+                            <Route path='/orders' element={<ORDERS />} />
+                            <Route path='orders/add' element={<ADDOFFER />} />
+                            <Route path='orders/edit/:editID' element={<EDITOFFER />} />
+
+                            <Route path='/order' element={<ORDER_DETAILS />} />
+                            <Route path='/login' element={<LOGINPAGE />} />
+
                         </Routes>
                     </div>
                 </div>

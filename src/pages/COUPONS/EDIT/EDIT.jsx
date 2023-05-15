@@ -15,7 +15,6 @@ const EDIT = () => {
     const [code, setCode] = useState('')
     const [status, setStatus] = useState(1)
     const [discount, setDiscount] = useState(0)
-    const [maxDiscount, setMaxDiscount] = useState('')
     const [minOrder, setMinOrder] = useState(0)
     const [desc, setDesc] = useState('')
 
@@ -30,7 +29,6 @@ const EDIT = () => {
             setDiscount(res.data[0].discount)
             setDesc(res.data[0].desc)
             setStatus(res.data[0].status)
-            setMaxDiscount(res.data[0].max_discount)
             setMinOrder(res.data[0].min_order)
         })
     }, [editID])
@@ -53,7 +51,6 @@ const EDIT = () => {
         formData.append('code', code.toUpperCase())
         formData.append('status', status)
         formData.append('discount', discount)
-        formData.append('max_discount', maxDiscount)
         formData.append('min_order', minOrder)
         formData.append('desc', desc)
 
@@ -116,11 +113,6 @@ const EDIT = () => {
                 <Form.Group className="mb-3">
                     <Form.Label>Discount (%)</Form.Label>
                     <Form.Control value={discount} onChange={(e) => setDiscount(e.target.value)} type="text" placeholder="Discount Percent" required />
-                </Form.Group>
-                
-                <Form.Group className="mb-3">
-                    <Form.Label>Maximum Discount (Taka)</Form.Label>
-                    <Form.Control value={maxDiscount} onChange={(e) => setMaxDiscount(e.target.value)} type="text" placeholder="Maximum Discount" required />
                 </Form.Group>
                 
                 <Form.Group className="mb-3">

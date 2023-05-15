@@ -74,13 +74,8 @@ const COUPONS = () => {
             sortable: true
         },
         {
-            name: 'Discount Percent',
-            selector: row => <span>{row.discount}%</span>,
-            sortable: true
-        },
-        {
-            name: 'Maximum Discount',
-            selector: row => <span>BDT {row.max_discount}.00</span>,
+            name: 'Discount',
+            selector: row => <span>BDT {row.discount}.00</span>,
             sortable: true
         },
         {

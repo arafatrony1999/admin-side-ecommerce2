@@ -12,7 +12,6 @@ const ADD = () => {
     const [code, setCode] = useState('')
     const [status, setStatus] = useState(1)
     const [discount, setDiscount] = useState(0)
-    const [maxDiscount, setMaxDiscount] = useState('')
     const [minOrder, setMinOrder] = useState(0)
     const [desc, setDesc] = useState('')
 
@@ -34,7 +33,6 @@ const ADD = () => {
         formData.append('code', code.toUpperCase())
         formData.append('status', status)
         formData.append('discount', discount)
-        formData.append('max_discount', maxDiscount)
         formData.append('min_order', minOrder)
         formData.append('desc', desc)
 
@@ -56,7 +54,6 @@ const ADD = () => {
                 setStatus(1)
                 setDesc('')
                 setCode('')
-                setMaxDiscount('')
                 setMinOrder(0)
             }else{
                 toast.error('Fill all the required field', {
@@ -112,13 +109,8 @@ const ADD = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                    <Form.Label>Discount (%)</Form.Label>
+                    <Form.Label>Discount (Taka)</Form.Label>
                     <Form.Control value={discount} onChange={(e) => setDiscount(e.target.value)} type="text" placeholder="Discount Percent" required />
-                </Form.Group>
-                
-                <Form.Group className="mb-3">
-                    <Form.Label>Maximum Discount (Taka)</Form.Label>
-                    <Form.Control value={maxDiscount} onChange={(e) => setMaxDiscount(e.target.value)} type="text" placeholder="Maximum Discount" required />
                 </Form.Group>
                 
                 <Form.Group className="mb-3">

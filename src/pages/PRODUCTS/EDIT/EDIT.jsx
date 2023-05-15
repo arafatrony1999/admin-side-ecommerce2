@@ -49,7 +49,6 @@ const EDIT = () => {
 
         axios.post('/getEditProduct', formData)
         .then((res) => {
-            console.log(res.data)
             setName(res.data.name)
             setPrice(res.data.price)
             setItem(res.data.item)
@@ -109,7 +108,7 @@ const EDIT = () => {
         axios.post('/editProduct', formData)
         .then((res) => {
             if(res.data === 1){
-                toast.success('Product edit successfull!', {
+                toast.success('Product edit successful!', {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -205,8 +204,7 @@ const EDIT = () => {
                     <Col>
                         <Form.Group className="mb-3">
                             <Form.Label>Any offer available?</Form.Label>
-                            <Form.Select onChange={(e) => setOffer(e.target.value)} defaultValue={offer} required>
-                                <option disabled>Open this select menu</option>
+                            <Form.Select onChange={(e) => setOffer(e.target.value)} value={offer} required>
                                 <option value={1}>Available</option>
                                 <option value={0}>Not Available</option>
                             </Form.Select>

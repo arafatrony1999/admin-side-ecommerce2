@@ -14,11 +14,11 @@ root.render(
     <UserProvider>
       <CatagoryProvider>
         <SubCatagoryProvider>
-          <OfferProvider>
-            <ProductProvider>
+          <ProductProvider>
+            <OfferProvider>
               <App />
-            </ProductProvider>
-          </OfferProvider>
+            </OfferProvider>
+          </ProductProvider>
         </SubCatagoryProvider>
       </CatagoryProvider>
     </UserProvider>

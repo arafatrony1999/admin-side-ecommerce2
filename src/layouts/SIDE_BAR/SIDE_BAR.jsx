@@ -69,7 +69,7 @@ const SIDEBAR = () => {
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink to='/'>
+                                <NavLink to='/orders'>
                                     <div className='sidebar-icon'>
                                         <FaImage />
                                     </div>
